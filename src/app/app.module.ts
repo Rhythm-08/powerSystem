@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PrimeNgModule } from './prime-ng/prime-ng.module';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 
 @NgModule({
     declarations: [
@@ -16,10 +18,17 @@ import { FormsModule } from '@angular/forms';
         AppRoutingModule,
         PrimeNgModule,
         FormsModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        HttpClientModule
 
     ],
-    providers: [],
+    providers: [
+        {
+            provide:HTTP_INTERCEPTORS,
+            useClass:AuthInterceptor,
+            multi:true
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
